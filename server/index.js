@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 
 
-mongoose.connect('mongodb://localhost:27017/chsi-ue');
+mongoose.connect('mongodb://localhost:27017/chsi-ue',{useMongoClient: true});
 
 const  db = mongoose.connection;
 
