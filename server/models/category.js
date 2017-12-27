@@ -5,6 +5,7 @@ const CategorySchema = new Schema(
   {
     name: { type: String, required: true},
     des: String,
+    parent:{ type: String, ref: 'Category'},
     children: [ this ]
   },
   { timestamps: true }
