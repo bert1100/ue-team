@@ -34,7 +34,7 @@ const routers = [
         component: (resolve) => require(['./views/teccol/detials.vue'], resolve)
     },
 	{
-        path: '/docs/icons/:id',
+        path: '/docs/icon',
         meta: {
             title: '学信网前端技术看板_图标库',
             name: 'icon'

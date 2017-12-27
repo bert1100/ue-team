@@ -17,18 +17,14 @@
                     <Icon type="ios-compose"></Icon>
                     文章发布
                 </Menu-item>
-                <Menu-item name="icons">
-                    <Icon type="ios-navigate"></Icon>
-                    图标
-                </Menu-item>
-                <Menu-item name="teccol">
-                    <Icon type="ios-keypad"></Icon>
-                    技术集
-                </Menu-item>
-                <Menu-item name="favor">
-                    <Icon type="ios-videocam"></Icon>
-                    网络资源库
-                </Menu-item>
+                <template v-if="categories.length>0">
+                    <Menu-item v-for="item in categories" :key="item.name" :name="item.name">
+                        <Icon type="ios-navigate" v-if="item.name==='icon'"></Icon>
+                        <Icon type="ios-keypad" v-else-if="item.name==='teccol'"></Icon>
+                        <Icon type="ios-videocam" v-else></Icon>
+                        {{item.des}}
+                    </Menu-item>
+                </template>
                 <Menu-item name="member">
                     <Icon type="ios-people"></Icon>
                     团队成员
@@ -47,43 +43,47 @@
         },
         data () {
             return {
+                categories: [],
                 articleTagList: [],
-                navigateList: [],
-                currentActiveKey: this.activeKey,
+                navigateList: []
             };
         },
-        watch: {
-            activeKey (val) {
-                this.currentActiveKey = val;
-            },
-            currentActiveKey (val) {
-                this.$emit('on-change', val);
+        computed: {
+            currentActiveKey() {
+                const route = this.$route.path;
+                if (route.indexOf('favor') > -1) {
+                    return 'favor';
+                } else if (route.indexOf('post') > -1) {
+                    return 'post';
+                }else if (route.indexOf('teccol') > -1) {
+                    return 'teccol';
+                }else if (route.indexOf('icon') > -1) {
+                    return 'icon';
+                }else if (route.indexOf('member') > -1) {
+                    return 'member';
+                } else {
+                    return '';
+                }
             }
         },
         methods: {
-            handleSearch (path) {
-                this.search = '';
-                this.$refs.select.setQuery('');
-                this.$nextTick(() => {
-                    setTimeout(() => {
-                        this.$router.push(path);
-                    }, 300);
-                });
+            updateActiveNav () {
+                
             },
             handleSelect (type) {
-                if (type === 'github') {
-                    window.open('https://github.com/iview/iview');
-                } else if (type === 'post') {
-                    this.$router.push('/post/article');
-                } else if (type === 'icons') {
-                    this.$router.push('/docs/icons/intorduce');
-                } else if (type === 'teccol') {
-                    this.$router.push('/docs/teccol');
-                } else if (type === 'favor') {
-                    this.$router.push('/docs/favor');
-                } else if (type === 'member') {
-                    this.$router.push('/member');
-                }
+                this.$nextTick(() => {
+                    if (type === 'post') {
+                        this.$router.push('/post/article');
+                    } else if (type === 'icon') {
+                        this.$router.push('/docs/icon');
+                    } else if (type === 'teccol') {
+                        this.$router.push('/docs/teccol');
+                    } else if (type === 'favor') {
+                        this.$router.push('/docs/favor');
+                    } else if (type === 'member') {
+                        this.$router.push('/member');
+                    }
+                });
             }
         },
         mounted () {
@@ -92,6 +92,11 @@
             });
         },
         created () {
+            this.categories = this.$store.state.categories.categorieslist;
+            this.updateActiveNav();
+            if(this.$store.state.categories.categorieslist.length==0){
+                this.$store.dispatch('postCategoriesList', '');
+            }
         }
     };
 </script>

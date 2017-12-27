@@ -14,7 +14,7 @@
     }
 </style>
 <template>
-    <div>
+    <div class="chsi-layout">
         <router-view></router-view>
         <Back-top :bottom="100"></Back-top>
         <transition name="fade">

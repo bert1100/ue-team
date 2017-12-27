@@ -5,7 +5,7 @@
     <div>
         <div class="wrapper">
             <div class="wrapper-header">
-                <nav-menu :active-key="activeKey" @on-change="handleNavMenuChange"></nav-menu>
+                <nav-menu></nav-menu>
             </div>
             <div class="wrapper-container">
                 <Row>
@@ -46,8 +46,6 @@
                 const route = this.$route.path;
                 if (route.indexOf('favor') > -1) {
                     this.activeKey = 'favor';
-                } else if (route.indexOf('guide') > -1) {
-                    this.activeKey = 'guide';
                 } else if (route.indexOf('post') > -1) {
                     this.activeKey = 'post';
                 }else if (route.indexOf('teccol') > -1) {
@@ -57,15 +55,13 @@
                 } else {
                     this.activeKey = '';
                 }
-            },
-            handleNavMenuChange (val) {
-                this.activeKey = val;
             }
         },
         created () {
+            this.updateActiveNav();
         },
         mounted () {
-            this.updateActiveNav();
+            
         }
     }
 </script>

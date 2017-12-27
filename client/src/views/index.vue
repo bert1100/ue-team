@@ -21,9 +21,9 @@
                     </h1>
                     <div class="list">
                         <router-link to="/post/article">文章发布</router-link>
-                        <router-link to="/docs/icons/introduce">图标</router-link>
-                        <router-link to="/docs/teccol">技术集</router-link>
-                        <router-link to="/docs/favor">网络资源库</router-link>
+                        <template v-for="item in categories">
+                            <router-link :to="'/docs/'+item.name">{{item.des}}</router-link>
+                        </template>
                         <router-link to="/member">团队成员</router-link>
                     </div>
                 </i-col>
@@ -39,6 +39,7 @@
     export default {
         data () {
             return {
+                categories: []
             }
         },
         methods: {
@@ -150,9 +151,14 @@
                 }
             }
         },
+        created () {
+            if(this.$store.state.categories.categorieslist.length==0){
+                this.$store.dispatch('postCategoriesList', '');
+            }
+        },
         mounted () {
             this.liziInit();
-            this.$store.dispatch('postCategoriesList', '');
+            this.categories = this.$store.state.categories.categorieslist;
         },
         beforeDestroy () {
             if (this.interval) clearInterval(this.interval);
