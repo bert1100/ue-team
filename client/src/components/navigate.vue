@@ -12,7 +12,6 @@
 </template>
 <script>
     import { getLeftMenuList } from '../api/axios';
-    import version from '../config/config';
     import bus from './bus';
     export default {
         props: {

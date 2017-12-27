@@ -18,16 +18,13 @@
                 <i-col span="24">
                     <h1 style="color: #fff;font-size: 48px;">
                         学信UED
-                        <!-- <img src="../images/logo.png" class="img-logo"> -->
-                        <!-- <img src="../images/name.png" class="img-name"> -->
                     </h1>
-                    <!-- <h2>{{ $t('index.title') }}</h2> -->
                     <div class="list">
-                        <router-link to="/post/article">{{ $t('index.post') }}</router-link>
-                        <router-link to="/docs/icons/introduce">{{ $t('index.icons') }}</router-link>
-                        <router-link to="/docs/teccol">{{ $t('index.technology_category') }}</router-link>
-                        <router-link to="/docs/favor">{{ $t('index.network_resource_library') }}</router-link>
-                        <router-link to="/member">{{ $t('index.team_member') }}</router-link>
+                        <router-link to="/post/article">文章发布</router-link>
+                        <router-link to="/docs/icons/introduce">图标</router-link>
+                        <router-link to="/docs/teccol">技术集</router-link>
+                        <router-link to="/docs/favor">网络资源库</router-link>
+                        <router-link to="/member">团队成员</router-link>
                     </div>
                 </i-col>
             </Row>

@@ -10,43 +10,28 @@
     <Menu mode="horizontal" :active-name="currentActiveKey" @on-select="handleSelect">
         <div class="wrapper-header-nav">
             <router-link to="/" class="wrapper-header-nav-logo">
-                <!-- <img src="../images/logo-doc.png"> -->
                 <div style="font-size: 32px;height: 50px;line-height: 50px;font-weight: 700;">学信UED</div>
             </router-link>
-            <!-- <div class="wrapper-header-nav-search">
-                <i-select
-                    ref="select"
-                    v-model="search"
-                    filterable
-                    :placeholder="searchText"
-                    :not-found-text="notFoundText"
-                    @on-change="handleSearch">
-                    <i-option v-for="item in articleTagList" :key="item._id" :value="item._id">
-                        <template v-if="lang === 'zh-CN'">{{ item.name }}</template>
-                        <template v-else>{{ item.title.split(' ')[0] }}</template>
-                    </i-option>
-                </i-select>
-            </div> -->
             <div class="wrapper-header-nav-list">
                 <Menu-item name="post">
                     <Icon type="ios-compose"></Icon>
-                    {{ $t('index.post') }}
+                    文章发布
                 </Menu-item>
                 <Menu-item name="icons">
                     <Icon type="ios-navigate"></Icon>
-                    {{ $t('index.icons') }}
+                    图标
                 </Menu-item>
                 <Menu-item name="teccol">
                     <Icon type="ios-keypad"></Icon>
-                    {{ $t('index.technology_category') }}
+                    技术集
                 </Menu-item>
                 <Menu-item name="favor">
                     <Icon type="ios-videocam"></Icon>
-                    {{ $t('index.network_resource_library') }}
+                    网络资源库
                 </Menu-item>
                 <Menu-item name="member">
                     <Icon type="ios-people"></Icon>
-                    {{ $t('index.team_member') }}
+                    团队成员
                 </Menu-item>
             </div>
         </div>
@@ -63,13 +48,8 @@
         data () {
             return {
                 articleTagList: [],
-                search: '',
                 navigateList: [],
-                liveDot: false,
                 currentActiveKey: this.activeKey,
-                searchText: this.$t('index.search'),
-                notFoundText: this.$t('index.notFound'),
-                lang: this.$lang
             };
         },
         watch: {
@@ -82,7 +62,6 @@
         },
         methods: {
             handleSearch (path) {
-                if (this.lang === 'en-US') path += '-en';
                 this.search = '';
                 this.$refs.select.setQuery('');
                 this.$nextTick(() => {
