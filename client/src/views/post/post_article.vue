@@ -90,7 +90,6 @@
 <script>
     import { uploadImgs,getLabels,addLabel,getUsers,postResources,putResources,getArticleDetail } from '../../api/axios';
     import markdownConfig from '../../config/markdown_config';
-    import tags from '../../api/tag';
     import iArticle from '../../components/article_nomenu.vue';
     import Anchor from '../../components/anchor.vue';
     import { Chrome } from 'vue-color';

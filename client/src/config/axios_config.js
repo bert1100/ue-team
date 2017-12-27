@@ -2,7 +2,8 @@ import axios from 'axios';
 import env from './env';
 
 const ajaxUrl = env === 'development'
-    ? 'http://172.16.11.149:3000'
+    // ? 'http://172.16.11.149:3000'
+    ? 'http://localhost:3000'
     : env === 'production'
         ? 'https://www.url.com'
         : 'https://debug.url.com';

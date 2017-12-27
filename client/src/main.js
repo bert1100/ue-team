@@ -1,13 +1,10 @@
-/**
- * Created by aresn on 16/6/20.
- */
-import 'babel-polyfill';
+import 'babel-polyfill'; //ie11兼容
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
 import Locales from './menu';
 import App from './components/app.vue';
-import Routers from './chsi_router';
+import Routers from './router';
 import Util from './libs/util';
 import iView from 'iview';
 import zhLocale from 'iview/dist/locale/zh-CN';
