@@ -152,9 +152,6 @@
             }
         },
         created () {
-            if(this.$store.state.categories.categorieslist.length==0){
-                this.$store.dispatch('postCategoriesList', '');
-            }
         },
         mounted () {
             this.liziInit();

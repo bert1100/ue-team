@@ -83,8 +83,12 @@ export function getArticleDetail(id) {
 
 //获取左边菜单
 export function getLeftMenuList(name) {
-	return fetch({
-		url: name+'/categories/',
-		method: 'get'
+	return new Promise((resolve,reject) => {
+		fetch({
+			url: name+'/categories/',
+			method: 'get'
+		}).then(response=>resolve(response))
+		.catch(()=>reject)
 	})
+	
 }

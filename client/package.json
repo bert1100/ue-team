@@ -1,7 +1,7 @@
 {
-  "name": "iview-doc",
+  "name": "ue-team",
   "version": "1.0.0",
-  "description": "Doc of iView",
+  "description": "Doc of ue-team",
   "main": "index.js",
   "scripts": {
     "mongod": "mongod --dbpath d:/data/db/",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iview/iview-doc"
+    "url": "https://github.com/bert1100/ue-team"
   },
   "author": "Aresn",
   "license": "MIT",

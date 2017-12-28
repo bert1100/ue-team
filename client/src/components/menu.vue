@@ -17,14 +17,12 @@
                     <Icon type="ios-compose"></Icon>
                     文章发布
                 </Menu-item>
-                <template v-if="categories.length>0">
-                    <Menu-item v-for="item in categories" :key="item.name" :name="item.name">
-                        <Icon type="ios-navigate" v-if="item.name==='icon'"></Icon>
-                        <Icon type="ios-keypad" v-else-if="item.name==='teccol'"></Icon>
-                        <Icon type="ios-videocam" v-else></Icon>
-                        {{item.des}}
-                    </Menu-item>
-                </template>
+                <Menu-item v-for="item in categories" :key="item.name" :name="item.name">
+                    <Icon type="ios-navigate" v-if="item.name==='icon'"></Icon>
+                    <Icon type="ios-keypad" v-else-if="item.name==='teccol'"></Icon>
+                    <Icon type="ios-videocam" v-else></Icon>
+                    {{item.des}}
+                </Menu-item>
                 <Menu-item name="member">
                     <Icon type="ios-people"></Icon>
                     团队成员
@@ -38,12 +36,8 @@
     import bus from './bus';
     import { getLabels } from '../api/axios';
     export default {
-        props: {
-            activeKey: String
-        },
         data () {
             return {
-                categories: [],
                 articleTagList: [],
                 navigateList: []
             };
@@ -52,7 +46,7 @@
             currentActiveKey() {
                 const route = this.$route.path;
                 if (route.indexOf('favor') > -1) {
-                    return 'favor';
+                   return 'favor';
                 } else if (route.indexOf('post') > -1) {
                     return 'post';
                 }else if (route.indexOf('teccol') > -1) {
@@ -64,12 +58,17 @@
                 } else {
                     return '';
                 }
+            },
+            categories() {
+                return this.$store.state.categories.categorieslist;
+            }
+        },
+        watch: {
+            categories: (a,b)=>{
+                
             }
         },
         methods: {
-            updateActiveNav () {
-                
-            },
             handleSelect (type) {
                 this.$nextTick(() => {
                     if (type === 'post') {
@@ -92,11 +91,7 @@
             });
         },
         created () {
-            this.categories = this.$store.state.categories.categorieslist;
-            this.updateActiveNav();
-            if(this.$store.state.categories.categorieslist.length==0){
-                this.$store.dispatch('postCategoriesList', '');
-            }
+
         }
     };
 </script>
