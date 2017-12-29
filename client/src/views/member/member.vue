@@ -19,6 +19,13 @@
 				    </Card>
 				</div>
 			</template>
+			<div class="member-list">
+				<Card>
+		        	<div class="text-center">
+			            <Icon type="android-person-add" style="height: 109px;font-size: 72px;line-height: 109px;color: #bbbec4;cursor: pointer"></Icon>
+			        </div>
+			    </Card>
+			</div>
 		</div>
 	</i-article>
 </template>

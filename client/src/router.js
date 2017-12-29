@@ -72,6 +72,15 @@ const routers = [
             name: 'member'
         },
         component: (resolve) => require(['./views/member/member.vue'], resolve),
+    },
+    {
+        path: '/categories',
+        name: 'categories',
+        meta: {
+            title: '学信网前端技术看板_网络资源库',
+            name: 'categories'
+        },
+        component: (resolve) => require(['./views/categories/categories.vue'], resolve),
     }
 ];
 

@@ -41,7 +41,7 @@
                     类别
                 </p>
                 <span slot="extra">
-                    <Icon type="plus-round" style="color: #2d8cf0;cursor: pointer"></Icon>
+                    <Button type="text" icon="plus-round" style="color: #2d8cf0;cursor: pointer" @click="updateCategories"></Button>
                 </span>
                 <Tabs size="small" :value="categories_value" :animated="false" class="chsi-tabs">
                     <template v-for="item in categories">
@@ -156,6 +156,9 @@
         watch: {
         },
         methods: {
+            updateCategories () {
+                this.$router.push({name: 'categories'})
+            },
             handleAddNewTag () {
                 this.addingNewTag = !this.addingNewTag;
             },

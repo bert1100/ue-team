@@ -16,8 +16,8 @@
             <div class="bg"><span></span></div>
             <Row type="flex" justify="center" align="middle" style="position: relative;z-index: 3">
                 <i-col span="24">
-                    <h1 style="color: #fff;font-size: 48px;">
-                        学信UED
+                    <h1>
+                        <css-text></css-text>
                     </h1>
                     <div class="list">
                         <router-link to="/post/article">文章发布</router-link>
@@ -35,12 +35,15 @@
 <script>
     import THREE from '../libs/three/three';
     import bus from '../../src/components/bus';
-
+    import cssText from '../../src/components/text.vue';
     export default {
         data () {
             return {
                 categories: []
             }
+        },
+        components: {
+            cssText
         },
         methods: {
             liziInit () {
