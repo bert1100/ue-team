@@ -5,7 +5,13 @@ module.exports = (app) =>{
 app.get('/categories',(req, res) => {
   Category.find({parent:null}).populate("children").sort({'createdAt': -1}).exec((err, categories) => {
     if(err) return res.status(500).json({error: err.message})
-    res.json({ categories })
+    process.nextTick(function(){ 
+      var _tem = setTimeout(function(){
+        res.json({ categories })
+      },0);
+    }) 
+
+    
   })
 })
 

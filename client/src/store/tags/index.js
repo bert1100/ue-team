@@ -4,7 +4,7 @@ import getters from './getters.js';
 
 const state = {
 	tagsList: [], //标签列表
-	newTag: {} //新增标签
+	newTag: '' //新增标签
 }
 
 export default {

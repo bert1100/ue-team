@@ -62,8 +62,8 @@
                 </p>
                 <Row>
                     <Col span="18">
-                        <Select v-model="articleTagSelected" multiple @on-change="handleSelectTag" placeholder="请选择文章标签" :value="articleTagSelected">
-                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
+                        <Select v-model="articleTagSelected" multiple filterable @on-change="handleSelectTag" placeholder="请选择文章标签" :value="articleTagSelected">
+                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id" v-if="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
                         </Select>
                     </Col>
                     <Col span="6" class="padding-left-10">
