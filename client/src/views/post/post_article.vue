@@ -62,8 +62,9 @@
                 </p>
                 <Row>
                     <Col span="18">
-                        <Select v-model="articleTagSelected" multiple filterable @on-change="handleSelectTag" placeholder="请选择文章标签" :value="articleTagSelected">
-                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id" v-if="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
+                        <Select v-model="articleTagSelected" label-in-value multiple @on-change="handleSelectTag" placeholder="请选择文章标签" :value="articleTagSelected">
+                            <Tag class="article-tag" v-for="item in articleTagColor" :key="item.value" slot="input" closable :name="item.value" @on-close="deleteTag" :color="item.value | selectColor(articleTagList)">{{item.label}}</Tag>
+                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id" v-if="item.name" :label="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
                         </Select>
                     </Col>
                     <Col span="6" class="padding-left-10">
@@ -112,6 +113,7 @@
                 user: '', //选中作者
                 addingNewTag: false, // 添加新标签
                 articleTagSelected: [], //文章选中的标签
+                articleTagColor: [], //文章选中的标签颜色
                 newTagName: '', // 新建标签名
                 contentHTML: '', //html字符串
                 toolbars: markdownConfig, //编辑器工具栏配置
@@ -156,6 +158,15 @@
         watch: {
         },
         methods: {
+            deleteTag(e,o) {
+                let arr = this.articleTagSelected;
+                arr.forEach(function(i,index){
+                    if(i===o){
+                        arr.splice(index,1);
+                        return;
+                    }
+                });
+            },
             updateCategories () {
                 this.$router.push({name: 'categories'})
             },
@@ -179,7 +190,7 @@
                 this.addingNewTag = false;
             },
             handleSelectTag (a) {
-                // console.log(a)
+                this.articleTagColor = a;
             },
             imgAdd (filename,imgfile) {  //添加图片回调
                 this.img_file[filename] = imgfile;

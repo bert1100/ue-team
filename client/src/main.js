@@ -33,6 +33,16 @@ Vue.use(Vuex);
 Vue.filter('date-string', function (value) {// value就是日期值
   return moment(value).format('YYYY-MM-DD')
 })
+Vue.filter('selectColor', function (value,o) {// value就是日期值
+    let color = '';
+    for(let i = 0;i<o.length;i++){
+        if(value===o[i]._id){
+           color =  o[i].color;
+           break;
+        }
+    }
+    return color;
+})
 
 // 开启debug模式
 Vue.config.debug = true;
