@@ -43,6 +43,16 @@ Vue.filter('selectColor', function (value,o) {// value就是日期值
     }
     return color;
 })
+Vue.filter('selectName', function (value,o) {// value就是日期值
+    let name = '';
+    for(let i = 0;i<o.length;i++){
+        if(value===o[i]._id){
+           name =  o[i].name;
+           break;
+        }
+    }
+    return name;
+})
 
 // 开启debug模式
 Vue.config.debug = true;

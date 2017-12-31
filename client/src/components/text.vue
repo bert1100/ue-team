@@ -22,7 +22,7 @@ export default {
 </script>
 <style lang="less" scoped>
 	.font-3d {
-		color: #144382;
+		color: transparent;
 		font-size: 72px;
 		display: inline-block;
 		position: relative;
@@ -45,28 +45,28 @@ export default {
 	    }
 	    &:hover {
 	    	&:after {
-				-webkit-transform: rotateY(-10deg);
-    			transform: rotateY(-10deg);
+	    		-webkit-transform: rotateY(-40deg);
+		    	transform: rotateY(-40deg);
 	    	}
 	    	&:before {
-				-webkit-transform: scale(1.1, 1) skew(0deg, 5deg);
-			    -ms-transform: scale(1.1, 1) skew(0deg, 5deg);
-			    transform: scale(1.1, 1) skew(0deg, 5deg);
+				-webkit-transform: scale(1.1, 1) skew(0deg, 20deg);
+			    -ms-transform: scale(1.1, 1) skew(0deg, 20deg);
+			    transform: scale(1.1, 1) skew(0deg, 20deg);
 	    	}
 	    }
 	    &:before {
 	    	z-index: 1;
 		    color: rgba(0,0,0,0.2);
-		    -webkit-transform: scale(1.1, 1) skew(0deg, 20deg);
-		    -ms-transform: scale(1.1, 1) skew(0deg, 20deg);
-		    transform: scale(1.1, 1) skew(0deg, 20deg);
+		    -webkit-transform: scale(1.1, 1) skew(0deg, 5deg);
+		    -ms-transform: scale(1.1, 1) skew(0deg, 5deg);
+		    transform: scale(1.1, 1) skew(0deg, 5deg);
 	    }
 	    &:after {
 	    	z-index: 2;
 		    color: #fff;
 		    text-shadow: -1px 0 1px #fff, 1px 0 1px rgba(0,0,0,0.8);
-		    -webkit-transform: rotateY(-40deg);
-		    transform: rotateY(-40deg);
+		    -webkit-transform: rotateY(-10deg);
+    		transform: rotateY(-10deg);
 	    }
 	}
 </style>

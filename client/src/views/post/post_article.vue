@@ -63,8 +63,8 @@
                 <Row>
                     <Col span="18">
                         <Select v-model="articleTagSelected" label-in-value multiple @on-change="handleSelectTag" placeholder="请选择文章标签" :value="articleTagSelected">
-                            <Tag class="article-tag" v-for="item in articleTagColor" :key="item.value" slot="input" closable :name="item.value" @on-close="deleteTag" :color="item.value | selectColor(articleTagList)">{{item.label}}</Tag>
-                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id" v-if="item.name" :label="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
+                            <Tag class="article-tag" v-for="item in articleTagColor" :key="item.value" slot="input" closable :name="item.value" @on-close="deleteTag" :color="item.value | selectColor(articleTagList)">{{item.value | selectName(articleTagList)}}</Tag>
+                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id" :label="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
                         </Select>
                     </Col>
                     <Col span="6" class="padding-left-10">
