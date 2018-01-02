@@ -62,8 +62,8 @@
                 </p>
                 <Row>
                     <Col span="18">
-                        <Select v-model="articleTagSelected" label-in-value multiple @on-change="handleSelectTag" placeholder="请选择文章标签" :value="articleTagSelected">
-                            <Tag class="article-tag" v-for="item in articleTagColor" :key="item.value" slot="input" closable :name="item.value" @on-close="deleteTag" :color="item.value | selectColor(articleTagList)">{{item.value | selectName(articleTagList)}}</Tag>
+                        <Select v-model="articleTagSelected" label-in-value multiple placeholder="请选择文章标签" :value="articleTagSelected">
+                            <Tag class="article-tag" v-for="item in articleTagSelected" :key="item" slot="input" closable :name="item" @on-close="deleteTag" :color="item | selectColor(articleTagList)">{{item | selectName(articleTagList)}}</Tag>
                             <Option v-for="item in articleTagList" :value="item._id" :key="item._id" :label="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
                         </Select>
                     </Col>
@@ -140,6 +140,7 @@
                     this.articleTagSelected.push(tag);
                     this.$store.commit('deltags');
                 }
+                console.log(this.$store.state.tags.tagsList)
                 return this.$store.state.tags.tagsList;
             },
             authorList() { // 作者列表
@@ -265,6 +266,7 @@
                     this.$store.state.article.article.labels.map((item)=>{
                         this.articleTagSelected.push(item._id)
                     })
+                    console.log(this.articleTagSelected)
                 } else {
                     getArticleDetail(this.$route.params.id).then((res)=>{
                         const data = res.data.resource[0];

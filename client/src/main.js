@@ -36,7 +36,7 @@ Vue.filter('date-string', function (value) {// value就是日期值
 Vue.filter('selectColor', function (value,o) {// value就是日期值
     let color = '';
     for(let i = 0;i<o.length;i++){
-        if(value===o[i]._id){
+        if(value==o[i]._id){
            color =  o[i].color;
            break;
         }
@@ -47,7 +47,7 @@ Vue.filter('selectName', function (value,o) {// value就是日期值
     let name = '';
     for(let i = 0;i<o.length;i++){
         if(value===o[i]._id){
-           name =  o[i].name;
+           name = o[i].name;
            break;
         }
     }

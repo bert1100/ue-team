@@ -62,7 +62,7 @@
             getArticleDetail(this.$route.params.id).then((res)=>{
             	const data = res.data.resource[0];
                 this.$store.dispatch('editevent', data);
-                this.$store.dispatch('addtagevent',data.labels);
+                this.$store.dispatch('uploadtagevent',data);
                 this.username = data.owner.name;
                 this.$nextTick(function(){
                 	this.create_catalogue();
