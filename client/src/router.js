@@ -9,6 +9,30 @@ const routers = [
         component: (resolve) => require(['./views/index.vue'], resolve)
 	},
     {
+        path: '/login',
+        meta: {
+            title: '学信网前端技术看板_登录',
+            name: ''
+        },
+        component: (resolve) => require(['./views/login/login.vue'], resolve)
+    },
+    {
+        path: '/register',
+        meta: {
+            title: '学信网前端技术看板_注册',
+            name: ''
+        },
+        component: (resolve) => require(['./views/login/register.vue'], resolve)
+    },
+    {
+        path: '/resetpassword',
+        meta: {
+            title: '学信网前端技术看板_找回密码',
+            name: ''
+        },
+        component: (resolve) => require(['./views/login/resetpassword.vue'], resolve)
+    },
+    {
         path: '/post/article',
         meta: {
             title: '学信网前端技术看板_发文章',
