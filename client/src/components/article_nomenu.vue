@@ -5,7 +5,7 @@
     <div>
         <div class="wrapper">
             <div class="wrapper-header">
-                <nav-menu :active-key="activeKey" @on-change="handleNavMenuChange"></nav-menu>
+                <nav-menu></nav-menu>
             </div>
             <div class="wrapper-content">
                 <slot name="center"></slot>
@@ -34,7 +34,6 @@
         },
         data () {
             return {
-                activeKey: ''
             }
         },
         methods: {
@@ -51,13 +50,13 @@
                 } else {
                     this.activeKey = '';
                 }
-            },
-            handleNavMenuChange (val) {
-                this.activeKey = val;
             }
         },
-        mounted () {
+        created () {
             this.updateActiveNav();
+        },
+        mounted () {
+            
         }
     }
 </script>

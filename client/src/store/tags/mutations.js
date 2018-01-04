@@ -3,9 +3,12 @@ import * as func from '../function';
 
 export default {
 	[type.ADDTAGEVENT](states, obj){
-        states.selectTag = obj.items;
+        states.newTag = obj.items._id;
     },
     [type.UPLOADTAGEVENT](states, obj){
         states.tagsList = obj.items;
+    },
+    deltags (states){
+        states.newTag = '';
     }
 }

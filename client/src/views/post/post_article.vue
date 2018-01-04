@@ -35,17 +35,20 @@
                     </template>
                 </Row>
             </Card>
-            <Card class="margin-top-10">
+            <Card class="margin-top-10 warp-color">
                 <p slot="title">
                     <Icon type="navicon-round"></Icon>
-                    分类目录
+                    类别
                 </p>
-                <Tabs size="small">
-                    <template v-for="item in categories" :value="categories_value">
-                        <TabPane :label="item.des" :name="item.name">
-                            <RadioGroup v-model="categoriesItem" vertical>
+                <span slot="extra">
+                    <Button type="text" icon="plus-round" style="color: #2d8cf0;cursor: pointer" @click="updateCategories"></Button>
+                </span>
+                <Tabs size="small" :value="categories_value" :animated="false" class="chsi-tabs">
+                    <template v-for="item in categories">
+                        <TabPane :label="item.des" :name="item._id">
+                            <RadioGroup v-model="categoriesItem" :value="categoriesItem" type="button">
                                 <template v-for="child in item.children">
-                                    <Radio :label="child._id">{{child.des}}</Radio>
+                                    <Radio :label="child._id" class="tagscolor tagscolor-type">{{child.des}}</Radio>
                                 </template>
                             </RadioGroup>
                         </TabPane>
@@ -59,8 +62,9 @@
                 </p>
                 <Row>
                     <Col span="18">
-                        <Select v-model="articleTagSelected" multiple @on-change="handleSelectTag" placeholder="请选择文章标签" :value="articleTagSelected">
-                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id" ><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
+                        <Select v-model="articleTagSelected" label-in-value multiple placeholder="请选择文章标签" :value="articleTagSelected">
+                            <Tag class="article-tag" v-for="item in articleTagSelected" :key="item" slot="input" closable :name="item" @on-close="deleteTag" :color="item | selectColor(articleTagList)">{{item | selectName(articleTagList)}}</Tag>
+                            <Option v-for="item in articleTagList" :value="item._id" :key="item._id" :label="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
                         </Select>
                     </Col>
                     <Col span="6" class="padding-left-10">
@@ -80,7 +84,9 @@
                         </Col>
                     </Row>
                    <div class="warp-color margin-top-20">
-                       <Chrome v-model="colors" style="width: 100%"></Chrome>
+                        <RadioGroup v-model="tagcolor" type="button">
+                            <Radio v-for="item in colors" :label="item" :key="item" class="tagscolor" :style="'background:'+item"><Icon type="checkmark-round" class="tagscolor-icon"></Icon></Radio>
+                        </RadioGroup>
                    </div>
                 </div>
             </Card>
@@ -90,45 +96,24 @@
 <script>
     import { uploadImgs,getLabels,addLabel,getUsers,postResources,putResources,getArticleDetail } from '../../api/axios';
     import markdownConfig from '../../config/markdown_config';
-    import tags from '../../api/tag';
     import iArticle from '../../components/article_nomenu.vue';
     import Anchor from '../../components/anchor.vue';
-    import { Chrome } from 'vue-color';
+    import tagscolor from '../../config/tagscolor_config';
     export default {
         components: {
             iArticle,
-            Anchor,
-            Chrome
+            Anchor
         },
         data () {
             return {
-                colors: {
-                  hex: '#194d33',
-                  hsl: {
-                    h: 150,
-                    s: 0.5,
-                    l: 0.2,
-                    a: 1
-                  },
-                  hsv: {
-                    h: 150,
-                    s: 0.66,
-                    v: 0.30,
-                    a: 1
-                  },
-                  rgba: {
-                    r: 25,
-                    g: 77,
-                    b: 51,
-                    a: 1
-                  },
-                  a: 1
-                },
+                colors: tagscolor,
+                tagcolor: '#2d8cf0',
                 categories_value: '',
                 categoriesItem: '', //选中标签
                 user: '', //选中作者
                 addingNewTag: false, // 添加新标签
                 articleTagSelected: [], //文章选中的标签
+                articleTagColor: [], //文章选中的标签颜色
                 newTagName: '', // 新建标签名
                 contentHTML: '', //html字符串
                 toolbars: markdownConfig, //编辑器工具栏配置
@@ -150,6 +135,12 @@
         },
         computed: {
             articleTagList() { // 所有标签列表
+                let tag = this.$store.state.tags.newTag;
+                if(tag!=''){
+                    this.articleTagSelected.push(tag);
+                    this.$store.commit('deltags');
+                }
+                console.log(this.$store.state.tags.tagsList)
                 return this.$store.state.tags.tagsList;
             },
             authorList() { // 作者列表
@@ -165,22 +156,32 @@
                 default: false
             }
         },
+        watch: {
+        },
         methods: {
+            deleteTag(e,o) {
+                let arr = this.articleTagSelected;
+                arr.forEach(function(i,index){
+                    if(i===o){
+                        arr.splice(index,1);
+                        return;
+                    }
+                });
+            },
+            updateCategories () {
+                this.$router.push({name: 'categories'})
+            },
             handleAddNewTag () {
                 this.addingNewTag = !this.addingNewTag;
             },
             createNewTag () {
                 if (this.newTagName.length !== 0) {
-                    let label = { name: this.newTagName,des:'',color: this.colors.hex };
-                    addLabel(label).then((res) => {
-                        this.$store.dispatch('addevent',res.data.labels);
-                        this.addingNewTag = false;
-                        setTimeout(() => {
-                            this.newTagName = '';
-                        }, 200);
-                    }).catch((err)=>{
-                        console.log(err);
-                    });
+                    let label = { name: this.newTagName,des:'',color: this.tagcolor };
+                    this.$store.dispatch('addtagevent',label);
+                    this.addingNewTag = false;
+                    setTimeout(() => {
+                        this.newTagName = '';
+                    }, 200);
                 } else {
                     this.$Message.error('请输入标签名');
                 }
@@ -189,8 +190,8 @@
                 this.newTagName = '';
                 this.addingNewTag = false;
             },
-            handleSelectTag () {
-
+            handleSelectTag (a) {
+                this.articleTagColor = a;
             },
             imgAdd (filename,imgfile) {  //添加图片回调
                 this.img_file[filename] = imgfile;
@@ -251,34 +252,41 @@
             }
         },
         created() {
-            let selectTag = this.$store.state.tags.selectTag;
-            if (selectTag.length > 0) {
-                selectTag.map((item)=>{
-                    this.articleTagSelected.push(item._id)
-                })
-            }
             if (this.isEdit) { //编辑
                 if(this.$store.state.article.article.title){
-                    console.log("有数据")
                     this.formItem.title = this.$store.getters.getArticle.title;
                     this.formItem.content = this.$store.getters.getArticle.content;
                     this.user = this.$store.getters.getArticle.owner._id;
-                    this.$nextTick(function(){
-                        this.categories_value = this.$store.getters.getArticle.category.name;
-                    });
+                    this.categoriesItem = this.$store.state.article.article.category._id;
+                    if(this.$store.state.article.article.category.parent) {
+                        this.categories_value = this.$store.state.article.article.category.parent;
+                    } else {
+                        this.categories_value = this.$store.state.article.article.category._id;
+                    }
+                    this.$store.state.article.article.labels.map((item)=>{
+                        this.articleTagSelected.push(item._id)
+                    })
+                    console.log(this.articleTagSelected)
                 } else {
-                    console.log("无数据")
                     getArticleDetail(this.$route.params.id).then((res)=>{
                         const data = res.data.resource[0];
                         this.formItem.title = data.title;
                         this.formItem.content = data.content;
                         this.user = data.owner._id;
+                        this.categoriesItem = data.category._id;
+                        if(data.category.parent) {
+                            this.categories_value = data.category.parent;
+                        } else {
+                            this.categories_value = data.category._id;
+                        }
+                        data.labels.map((item)=>{
+                            this.articleTagSelected.push(item._id)
+                        })
                     });
                 }
             }
         },
         mounted (){
-            // this.categories_value = this.$store.getters.getArticle.category.name;
         },
         watch: {
             // formItem: {  //内容必填
@@ -352,5 +360,72 @@
     }
     .add-new-tag-con {
         height: auto;
+    }
+    .warp-color .ivu-radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .warp-color .ivu-radio-group .tagscolor {
+        color: #fff;
+        border: 0;
+        height: 40px;
+        line-height: 40px;
+        width: 56px;
+        border-radius: 0!important;
+        margin-bottom: 10px;
+        text-align: center;
+        &:hover {
+            color: #fff;
+        }
+        &.ivu-radio-wrapper-checked {
+            box-shadow: none;
+        }
+        &.tagscolor-type {
+            background: transparent;
+            color: #2d8cf0;
+            border: 1px solid #2d8cf0;
+            height: 24px;
+            line-height:24px;
+            width:auto;
+            padding:0 10px;
+            &.ivu-radio-wrapper-checked {
+                background: #2d8cf0;
+                color: #fff;
+            }
+        }
+    }
+    .tagscolor .tagscolor-icon {
+        display: none;
+    }
+    .tagscolor.ivu-radio-wrapper-checked .tagscolor-icon {
+        display: inline-block;
+    }
+    .chsi-tabs {
+        .ivu-tabs-bar {
+            margin-bottom: 0;
+        }
+        .ivu-tabs-content {
+            padding: 10px 10px 0;
+            min-height: 44px;
+        }
+        .ivu-tabs-tab-active {
+           // color: #495060!important;
+        }
+        .ivu-tabs-bar {
+           border-bottom: 1px solid #2d8cf0;
+        }
+        .ivu-tabs-ink-bar {
+            background: transparent;
+            &:before {
+               display: block;
+               text-align: center;
+               content: "\F10D";
+               font-family: Ionicons;
+               position: relative;
+               margin-top: -10px;
+               color: #2d8cf0;
+            }
+        }
     }
 </style>

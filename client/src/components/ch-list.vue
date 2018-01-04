@@ -9,13 +9,13 @@
 						<Tag type="border" :closable="false" :name="label._id" style="height:32px;line-height: 32px;padding:0 12px;"><span :style="'background:'+label.color" class="ch-tag"></span>{{label.name}}</Tag>
 					</template>
 				</p>
-				<p slot="extra">
+				<!-- <p slot="extra">
 					<ButtonGroup>
 				        <Button type="ghost" icon="heart">100</Button>
 				        <Button type="ghost" icon="star">40</Button>
 				        <Button type="ghost" icon="chatbox-working">40</Button>
 				    </ButtonGroup>
-				</p>
+				</p> -->
 			</Card>
 		</template>
 	</div>

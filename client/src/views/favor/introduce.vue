@@ -14,22 +14,16 @@
 <script>
     import { getArticle } from '../../api/axios';
     import iArticle from '../../components/article.vue';
-    import iCode from 'iCode';
-    import Code from '../../code/guide';
     import Anchor from '../../components/anchor.vue';
-    import chMarkdown from '../../api/markdown.vue';
     import chList from '../../components/ch-list.vue';
     export default {
         components: {
             iArticle,
-            iCode,
             Anchor,
-            chMarkdown,
             chList
         },
         data () {
             return {
-                code: Code,
                 value: [20, 50],
                 list: [],
                 total: 0,

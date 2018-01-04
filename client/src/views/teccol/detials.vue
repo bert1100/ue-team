@@ -7,7 +7,8 @@
 					<avatar :username="username" color="#fff" class="article-base-user"></avatar>
 					<p class="article-base-creattime"><strong>创建时间：</strong>{{article.createdAt | date-string}}</p>
 					<template v-for="label in article.labels">
-						<Tag :closable="false" :name="label._id" :style="'color:#fff; background:'+label.color">{{label.name}}</Tag>
+						<span class="tagsdetail" :style="'background:'+label.color">{{label.name}}</span>
+						<!-- <Tag :closable="false" :name="label._id" :style="'color:#fff; background:'+label.color" class="tagsdetail">{{label.name}}</Tag> -->
 					</template>
 				</div>
 				<div class="article-content markdown-body" v-html="article.contentHTML" id="post">
@@ -61,7 +62,7 @@
             getArticleDetail(this.$route.params.id).then((res)=>{
             	const data = res.data.resource[0];
                 this.$store.dispatch('editevent', data);
-                this.$store.dispatch('addtagevent',data.labels);
+                this.$store.dispatch('uploadtagevent',data);
                 this.username = data.owner.name;
                 this.$nextTick(function(){
                 	this.create_catalogue();
@@ -102,5 +103,14 @@
 	}
 	.markdown-body img {
 		width: 100%;
+	}
+	.tagsdetail {
+		display: inline-block;
+		color: #fff;
+		font-size: 12px;
+		border-radius: 2px;
+		height: 24px;
+		line-height: 24px;
+		padding: 0 10px; 
 	}
 </style>
