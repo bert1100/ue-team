@@ -26,19 +26,35 @@ app.get('/categories/:id', (req, res) => {
   })
 })
 
+
+// if(category.parent != ''){
+//   Category.findByIdAndUpdate(category.parent,{$push: {children: category.id}}, {new: true}, function(err, doc) {
+//     if(err){ return res.json({error: err.message}); }
+//   });
+// }
 // 创建新记录
 app.post('/categories', (req, res) => {
   let category = new Category(req.body);
     // 逻辑：应当先检查是否有重复，然后再更新
-  category.save((err,cat)=>{
-      if(err) return res.json({error: err.message})
-      if(category.parent != ''){
-        Category.findByIdAndUpdate(category.parent,{$push: {children: category.id}}, {new: true}, function(err, doc) {
-          if(err){ return res.json({error: err.message}); }
-        });
-      }
-        res.json({ cat })
+  category.save()
+  .then(cat => {
+    if(cat.parent != ''){
+      return Category.findByIdAndUpdate(cat.parent,{$push: {children: cat.id}}, {new: true})
+    }
+    else {
+      return cat
+    }
+  }, error => {
+    return error;
   })
+.then(o => {
+  return category
+}, e => {
+  category.remove();
+ return e;
+})
+  .then(category => res.json({category}))
+  .catch(err => res.json({error: err.message }))
 
 
 })
@@ -60,13 +76,30 @@ app.put('/categories/:id', (req,res) => {
 
 // 删除一条记录
 app.delete('/categories/:id', (req, res) => {
+
+
   Category.findById({_id: req.params.id }).exec((err,category) => {
-    if(err) return res.status(500).json({ error: err.message })
-    category.remove((err) => {
-      if(err) return res.status(500).json({ error: err.message })
-      res.json({ messages:"deleted success!"})
-    })
+    if(err) return err
+    return category
   })
+  .then(category => {
+    if(category.parent != ''){
+       return  Category.findByIdAndRemove(category.id)
+    }
+    else{
+      throw new Error('cannot delete the top category!');
+    }
+  }, error => {
+    return error;
+  })
+  .then(cat =>{
+    return Category.findByIdAndUpdate(cat.parent,{ $pull: {children: {$in: [cat.id] } } }, {new: true})
+  },er =>{
+    return error;
+  })
+  .then(ok => res.json({ messages:"deleted success!"}))
+  .catch(err => res.status(500).json({error: err.message }))
+
 })
 
 
