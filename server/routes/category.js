@@ -9,6 +9,15 @@ app.get('/categories',(req, res) => {
   })
 })
 
+
+// 查询集合 : will be delete
+app.get('/categories-all',(req, res) => {
+  Category.find().sort({'createdAt': -1}).exec((err, categories) => {
+    if(err) return res.status(500).json({error: err.message})
+    res.json({ categories })
+  })
+})
+
 // 查询单条记录
 app.get('/categories/:id', (req, res) => {
   Category.find({_id: req.params.id}).exec((err,category) => {
@@ -19,12 +28,19 @@ app.get('/categories/:id', (req, res) => {
 
 // 创建新记录
 app.post('/categories', (req, res) => {
-
   let category = new Category(req.body);
-  category.save((err) => {
-    if(err) console.log(err)
-    res.json({ category })
+    // 逻辑：应当先检查是否有重复，然后再更新
+  category.save((err,cat)=>{
+      if(err) return res.json({error: err.message})
+      if(category.parent != ''){
+        Category.findByIdAndUpdate(category.parent,{$push: {children: category.id}}, {new: true}, function(err, doc) {
+          if(err){ return res.json({error: err.message}); }
+        });
+      }
+        res.json({ cat })
   })
+  
+
 })
 
 // 更新记录
@@ -54,7 +70,7 @@ app.delete('/categories/:id', (req, res) => {
 })
 
 
-// 查询子类
+// 查询子类: will be del---
 app.get('/:name/categories/', (req, res) => {
   Category.findOne({name: req.params.name}).populate('children').exec((err,category) => {
       if(err) return res.status(500).json({ error : err.message })

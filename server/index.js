@@ -11,18 +11,14 @@ app.use(bodyParser.json());
 
 
 
-mongoose.connect('mongodb://localhost:27017/chsi-ue');
+mongoose.connect('mongodb://localhost:27017/chsi-ue',{ useMongoClient: true });
+// 消除警告信息，使用nodejs的promise，见官方文档
+mongoose.Promise = global.Promise;
 
 const  db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', () => {
-//   let category = new Category({ name: 'post', des:'文章'});
-//   category.save((err) => {
-//     if(err) console.log(err)
-//   })
-//   console.log('db conncted success!')
-// })
+
 
 const routes = require("./routes");
 routes(app);
