@@ -9,6 +9,14 @@ const routers = [
         component: (resolve) => require(['./views/index.vue'], resolve)
 	},
     {
+        path: '/404',
+        meta: {
+            title: '学信网前端技术看板',
+            name: ''
+        },
+        component: (resolve) => require(['./views/errorpage/404.vue'], resolve)
+    },
+    {
         path: '/login',
         meta: {
             title: '学信网前端技术看板_登录',
