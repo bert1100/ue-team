@@ -92,3 +92,35 @@ export function getLeftMenuList(name) {
 	})
 	
 }
+export function postCategories(obj) { //{name: '',des: '',parent: 'parentid',id: ''}
+	return new Promise((resolve,reject) => {
+		fetch({
+			url: '/categories/',
+			method: 'post',
+			data: obj
+		}).then(response=>resolve(response))
+		.catch(()=>reject)
+	})
+	
+}
+export function putCategories(obj) { //{name: '',des: '', id: '',parent: 'parentid'}
+	return new Promise((resolve,reject) => {
+		fetch({
+			url: '/categories/'+obj.id,
+			method: 'put',
+			data: obj
+		}).then(response=>resolve(response))
+		.catch(()=>reject)
+	})
+	
+}
+export function deleteCategories(obj) { //{name: '',des: '', id: '',parent: 'parentid'}
+	return new Promise((resolve,reject) => {
+		fetch({
+			url: '/categories/'+obj.id,
+			method: 'delete'
+		}).then(response=>resolve(response))
+		.catch(()=>reject)
+	})
+	
+}
