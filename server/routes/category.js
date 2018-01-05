@@ -1,4 +1,25 @@
 const Category = require('../models/category');
+const jwt = require('jsonwebtoken');
+const secret = require('../config.js').jwtsecret;
+
+const requireAuth = function(req, res, next) {
+  let token = req.headers.authorization;
+  if(token){
+    jwt.verify(token, secret, function(err, decoded) {
+      if(err){
+        if(err.name == 'TokenExpiredError') {
+          return res.status(401).json({error: '认证失效，请重新登录！'})
+        }else {
+          return res.status(401).json({error: '认证失败！'})
+        }
+      } else {
+        next();
+      }
+    })
+  }else {
+    return res.status(403).json({error: '认证失败，请重新登录！'})
+  }
+}
 
 module.exports = (app) =>{
 // 查询集合
@@ -33,7 +54,7 @@ app.get('/categories/:id', (req, res) => {
 //   });
 // }
 // 创建新记录
-app.post('/categories', (req, res) => {
+app.post('/categories',requireAuth, (req, res) => {
   let category = new Category(req.body);
     // 逻辑：应当先检查是否有重复，然后再更新
   category.save()

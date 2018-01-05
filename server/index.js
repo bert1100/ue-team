@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+// const User = require('./models/user'); //deleted after test!
 // 开通静态访问目录，以便图片可以显示
 app.use("/public",express.static(path.join(__dirname,'public')));
 app.use(cors());
@@ -18,7 +19,14 @@ mongoose.Promise = global.Promise;
 const  db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-
+// db.once('open',function() {
+//   let weij = new User({
+//     username: 'weij',
+//     password: '123456',
+//     email:'wej@chsi.com.cn'
+//   });
+//   weij.save();
+// })
 
 const routes = require("./routes");
 routes(app);

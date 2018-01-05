@@ -1,6 +1,31 @@
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const secret = require('../config.js').jwtsecret;
+
+const generateToken = function (user) {
+  return jwt.sign(user, secret, {
+    expiresIn: 3000
+  })
+}
 
 module.exports = (app) =>{
+
+
+// 用户登录
+app.post('/auth/login', (req, res) => {
+  User.findOne({username: req.body.username},function(err, user) {
+    if(!user){ return res.status(403).json({ error:"用户不存在！"}) }
+    user.comparePassword(req.body.password, function(err,isMatch){
+      if(!isMatch){ return res.status(403).json({error:'密码错误！'})}
+      return res.json({
+        token: generateToken({name: user.username}),
+        user: {name: user.username}
+      })
+    })
+  })
+})
+
+
 // 查询集合
 app.get('/users',(req, res) => {
   User.find().sort({'createdAt': -1}).exec((err, users) => {
