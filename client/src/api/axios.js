@@ -44,8 +44,18 @@ export function login(obj) {
 	return fetch({
 		url: '/auth/login',
 		method: 'post',
-		obj
-	}).then(response=>resolve(response));
+		data: obj
+	});
+}
+/*
+注册
+ */
+export function register(obj) {
+	return fetch({
+		url: '/users',
+		method: 'post',
+		data: obj
+	});
 }
 /*
 发布文章

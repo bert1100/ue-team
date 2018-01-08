@@ -15,6 +15,9 @@
                     <Icon type="log-in"></Icon>
                     注册
                 </p>
+                <p slot="extra">
+                     <router-link to="/login">返回登录</router-link>
+                </p>
                 <div class="form-con">
                     <Form ref="loginForm" :model="form">
                     	<FormItem prop="name">
@@ -95,11 +98,13 @@ export default {
     },
     methods: {
         handleSubmit () {
-            // this.$refs.loginForm.validate((valid) => {
-            //     if (valid) {
-                   
-            //     }
-            // });
+            this.$refs.loginForm.validate((valid) => {
+                if (valid) {
+                    this.$store.dispatch('register', this.form);
+                } else {
+                    this.$Message.error('请输入正确的用户名和密码');
+                }
+            });
         },
         hidden() {
         	this.loginClass = '';

@@ -8,5 +8,10 @@ export default {
     login(states, obj){
     	states.userinfo = obj.user;
     	states.token = obj.token;
+    },
+    register(states, obj) {
+    	states.userinfo = obj.user;
+    	states.token = obj.token;
     }
+
 }

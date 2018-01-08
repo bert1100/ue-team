@@ -1,4 +1,4 @@
-import { getUsers,login } from '../../api/axios';
+import { getUsers,login,register } from '../../api/axios';
 export default {
 	postuserlist: ({commit}) => {
 		getUsers().then((res) => {
@@ -7,7 +7,13 @@ export default {
 	},
 	login:({dispatch, commit}, userinfo) => {
         login(userinfo).then(response => {
-        	console.log(response.status)
-        })
+
+        });
+	},
+	register: ({dispatch, commit}, userinfo) => {
+        register(userinfo).then(response => {
+        	console.log(response.data)
+        });
 	}
+
 }

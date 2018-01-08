@@ -32,7 +32,6 @@
     </Menu>
 </template>
 <script>
-    import Config from '../config/config';
     import bus from './bus';
     import { getLabels } from '../api/axios';
     export default {

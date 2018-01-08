@@ -32,9 +32,13 @@
                             </Input>
                         </FormItem>
                         <FormItem>
-                            <Button @click="handleSubmit" type="primary" long>登录</Button>
-                        	<a href="###" style="margin-right: 15px;">忘记密码？</a>
-                        	<a href="###">注册</a>
+                            <Row>
+                                <Col span="19">
+                                    <router-link to="/resetpassword">忘记密码？</router-link>
+                                    <router-link to="/register" style="margin-left: 10px;">注册</router-link>
+                                </Col>
+                                <Col span="5"><Button @click="handleSubmit" type="primary" long>登录</Button></Col>
+                            </Row>
                         </FormItem>
                     </Form>
                 </div>
@@ -44,6 +48,7 @@
 </template>
 
 <script>
+import { login } from '../../api/axios';
 export default {
     data () {
         return {

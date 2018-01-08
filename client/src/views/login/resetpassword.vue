@@ -15,6 +15,9 @@
                     <Icon type="log-in"></Icon>
                     重置密码
                 </p>
+                <p slot="extra">
+                     <router-link to="/login">返回登录</router-link>
+                </p>
                 <div class="form-con">
                     <Form ref="loginForm" :model="form">
                         <FormItem prop="userName">
