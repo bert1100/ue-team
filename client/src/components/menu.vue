@@ -27,14 +27,22 @@
                     <Icon type="ios-people"></Icon>
                     团队成员
                 </Menu-item>
+                <div style="position: relative;display: inline-block;width: 80px;text-align: right">
+                    <avatar v-if="user.name" :username="user.name" color="#fff" backgroundColor="#2d8cf0" :size="40" style="position:absolute;top: 50%;left:50%; transform: translate(-50%,-64%);"></avatar>
+                    <router-link to="/login" v-else><Button type="primary">登录</Button></router-link>
+                </div>
             </div>
         </div>
     </Menu>
 </template>
 <script>
     import bus from './bus';
-    import { getLabels } from '../api/axios';
+    import Avatar from 'vue-avatar';
+    // import { getLabels } from '../api/axios';
     export default {
+        components: {
+            Avatar
+        },
         data () {
             return {
                 articleTagList: [],
@@ -42,6 +50,9 @@
             };
         },
         computed: {
+            user() {
+                return this.$store.state.user.userinfo;
+            },
             currentActiveKey() {
                 const route = this.$route.path;
                 if (route.indexOf('favor') > -1) {
@@ -85,9 +96,9 @@
             }
         },
         mounted () {
-            getLabels().then((res) => {
-                this.articleTagList = res.data.labels;
-            });
+            // getLabels().then((res) => {
+            //     this.articleTagList = res.data.labels;
+            // });
         },
         created () {
 

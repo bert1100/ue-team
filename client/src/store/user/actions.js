@@ -1,3 +1,4 @@
+import axios from '../../config/axios_config';
 import { getUsers,login,register } from '../../api/axios';
 export default {
 	postuserlist: ({commit}) => {
@@ -7,6 +8,9 @@ export default {
 	},
 	login:({dispatch, commit}, userinfo) => {
         login(userinfo).then(response => {
+        	commit('login',response.data);
+        	axios.defaults.headers.common['Authorization'] = response.data.token;
+        }).catch(error=> {
 
         });
 	},

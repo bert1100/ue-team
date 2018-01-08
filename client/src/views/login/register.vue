@@ -27,8 +27,8 @@
                                 </span>
                             </Input>
                         </FormItem>
-                        <FormItem prop="userName">
-                            <Input v-model="form.userName" placeholder="请输入用户名">
+                        <FormItem prop="username">
+                            <Input v-model="form.username" placeholder="请输入用户名">
                                 <span slot="prepend">
                                     <Icon :size="16" type="person"></Icon>
                                 </span>
@@ -71,14 +71,14 @@ export default {
         return {
         	loginClass: '',
             form: {
-                userName: '',
+                username: '',
                 password: '',
                 repassword: '',
                 email: '',
                 name: ''
             },
             rules: {
-                userName: [
+                username: [
                     { required: true, message: '账号不能为空', trigger: 'blur' }
                 ],
                 password: [

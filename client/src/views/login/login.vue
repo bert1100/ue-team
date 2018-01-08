@@ -16,9 +16,9 @@
                     欢迎登录
                 </p>
                 <div class="form-con">
-                    <Form ref="loginForm" :model="form">
-                        <FormItem prop="userName">
-                            <Input v-model="form.userName" placeholder="请输入用户名">
+                    <Form ref="loginForm" :model="form" :rules="rules">
+                        <FormItem prop="username">
+                            <Input v-model="form.username" placeholder="请输入用户名">
                                 <span slot="prepend">
                                     <Icon :size="16" type="person"></Icon>
                                 </span>
@@ -54,11 +54,11 @@ export default {
         return {
         	loginClass: '',
             form: {
-                userName: '',
+                username: '',
                 password: ''
             },
             rules: {
-                userName: [
+                username: [
                     { required: true, message: '账号不能为空', trigger: 'blur' }
                 ],
                 password: [
@@ -71,9 +71,13 @@ export default {
         handleSubmit () {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    this.$store.dispatch('login', this.form);
+                    this.$store.dispatch('login', this.form).then(()=>{
+                        if(this.$store.state.user.userinfo.name) {
+                            this.$router.push('/post/article');
+                        }
+                    });
                 } else {
-                    this.$Message.error('请输入正确的用户名和密码');
+                    // this.$Message.error('用户名和密码不能为空');
                 }
             });
         },
