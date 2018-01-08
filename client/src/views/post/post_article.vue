@@ -140,7 +140,6 @@
                     this.articleTagSelected.push(tag);
                     this.$store.commit('deltags');
                 }
-                console.log(this.$store.state.tags.tagsList)
                 return this.$store.state.tags.tagsList;
             },
             authorList() { // 作者列表

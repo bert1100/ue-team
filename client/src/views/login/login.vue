@@ -64,11 +64,13 @@ export default {
     },
     methods: {
         handleSubmit () {
-            // this.$refs.loginForm.validate((valid) => {
-            //     if (valid) {
-                   
-            //     }
-            // });
+            this.$refs.loginForm.validate((valid) => {
+                if (valid) {
+                    this.$store.dispatch('login', this.form);
+                } else {
+                    this.$Message.error('请输入正确的用户名和密码');
+                }
+            });
         },
         hidden() {
         	this.loginClass = '';

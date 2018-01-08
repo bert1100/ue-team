@@ -37,7 +37,16 @@ export function getUsers() {
 		method: 'get',
 	});
 }
-
+/*
+登录
+ */
+export function login(obj) {
+	return fetch({
+		url: '/auth/login',
+		method: 'post',
+		obj
+	}).then(response=>resolve(response));
+}
 /*
 发布文章
  */
