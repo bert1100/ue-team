@@ -19,7 +19,8 @@ app.post('/auth/login', (req, res) => {
       if(!isMatch){ return res.status(403).json({error:'密码错误！'})}
       return res.json({
         token: generateToken({name: user.username}),
-        user: {name: user.name}
+        user: {id: user.id, name: user.name, account: user.username}
+
       })
     })
   })
