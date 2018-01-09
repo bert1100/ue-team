@@ -19,7 +19,7 @@ app.post('/auth/login', (req, res) => {
       if(!isMatch){ return res.status(403).json({error:'密码错误！'})}
       return res.json({
         token: generateToken({name: user.username}),
-        user: {name: user.username}
+        user: {name: user.name}
       })
     })
   })
@@ -44,8 +44,6 @@ app.get('/users/:id', (req, res) => {
 
 // 创建新记录
 app.post('/users', (req, res) => {
-  console.log( 'POST ／users', req.body);
-
   let user = new User(req.body);
   user.save((err) => {
     if(err) console.log(err)
