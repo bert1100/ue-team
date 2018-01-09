@@ -18,14 +18,14 @@
                     <Icon type="paper-airplane"></Icon>
                     发布
                 </p>
-                <p class="margin-top-10">
+                <!-- <p class="margin-top-10">
                     <Icon type="person"></Icon>&nbsp;&nbsp;作&nbsp;&nbsp;&nbsp; 者：
                     <Select size="small" style="width:90px" v-model="user" :disabled="isEdit">
                         <Option v-for="item in authorList" :value="item._id" :key="item._id">{{ item.name }}</Option>
                     </Select>
-                </p>
-                <Row class="margin-top-20 publish-button-con">
-                    <span class="publish-button"><Button disabled title="正在开发，暂不支持该功能">预览</Button></span>
+                </p> -->
+                <Row>
+                    <span class="publish-button"><Button title="正在开发，暂不支持该功能" icon="eye">预览</Button></span>
                     <!-- <span class="publish-button"><Button disabled title="正在开发，暂不支持该功能">保存草稿</Button></span> -->
                     <template v-if="isEdit">
                         <span class="publish-button"><Button @click="handlePublish('articleValidate')" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">修改</Button></span>
@@ -35,6 +35,7 @@
                     </template>
                 </Row>
             </Card>
+
             <Card class="margin-top-10 warp-color">
                 <p slot="title">
                     <Icon type="navicon-round"></Icon>
@@ -110,12 +111,12 @@
                 tagcolor: '#2d8cf0',
                 categories_value: '',
                 categoriesItem: '', //选中标签
-                user: '', //选中作者
                 addingNewTag: false, // 添加新标签
                 articleTagSelected: [], //文章选中的标签
                 articleTagColor: [], //文章选中的标签颜色
                 newTagName: '', // 新建标签名
                 contentHTML: '', //html字符串
+                // user: '',
                 toolbars: markdownConfig, //编辑器工具栏配置
                 img_file: {}, //
                 publishLoading: false,
@@ -134,6 +135,9 @@
             }
         },
         computed: {
+            user() {
+                return this.$store.state.user.userinfo.id;
+            },
             articleTagList() { // 所有标签列表
                 let tag = this.$store.state.tags.newTag;
                 if(tag!=''){
@@ -363,7 +367,7 @@
     .warp-color .ivu-radio-group {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        // justify-content: space-between;
     }
     .warp-color .ivu-radio-group .tagscolor {
         color: #fff;
@@ -374,6 +378,7 @@
         border-radius: 0!important;
         margin-bottom: 10px;
         text-align: center;
+        margin-right: 10px; 
         &:hover {
             color: #fff;
         }

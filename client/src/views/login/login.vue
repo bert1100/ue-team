@@ -71,10 +71,10 @@ export default {
         handleSubmit () {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    this.$store.dispatch('login', this.form).then(()=>{
-                        if(this.$store.state.user.userinfo.name) {
-                            this.$router.push('/post/article');
-                        }
+                    this.$store.dispatch('login', this.form).then(response => {
+                        this.$router.push({ path: '/post/article' })
+                    },error => {
+                        this.$Message.error(error.data.error);
                     });
                 } else {
                     // this.$Message.error('用户名和密码不能为空');

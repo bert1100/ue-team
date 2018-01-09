@@ -6,14 +6,17 @@ export default {
             commit('POSTUSERLIST', {items: res.data.users })
         });
 	},
-	login:({dispatch, commit}, userinfo) => {
-        login(userinfo).then(response => {
-        	commit('login',response.data);
-        	axios.defaults.headers.common['Authorization'] = response.data.token;
-        }).catch(error=> {
-
+	login: ({dispatch, commit}, userinfo) => {
+        return new Promise((resolve, reject) => {
+            login(userinfo).then(response => {
+                axios.defaults.headers.common['Authorization'] = response.data.token;
+                commit('login',response.data);
+                resolve();
+            }).catch(error => {
+               reject(error.response)
+            })
         });
-	},
+    },
 	register: ({dispatch, commit}, userinfo) => {
         register(userinfo).then(response => {
         	console.log(response.data)

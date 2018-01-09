@@ -112,5 +112,6 @@
 		height: 24px;
 		line-height: 24px;
 		padding: 0 10px; 
+		margin-right: 10px; 
 	}
 </style>
