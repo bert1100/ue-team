@@ -24,7 +24,7 @@ const requireAuth = function(req, res, next) {
 module.exports = (app) =>{
 // 查询集合
 app.get('/categories',(req, res) => {
-  Category.find({parent:null}).populate("children").sort({'createdAt': -1}).exec((err, categories) => {
+  Category.find({parent:''}).populate("children").sort({'createdAt': -1}).exec((err, categories) => {
     if(err) return res.status(500).json({error: err.message})
     res.json({ categories })
   })
@@ -54,7 +54,7 @@ app.get('/categories/:id', (req, res) => {
 //   });
 // }
 // 创建新记录
-app.post('/categories',requireAuth, (req, res) => {
+app.post('/categories', (req, res) => {
   let category = new Category(req.body);
     // 逻辑：应当先检查是否有重复，然后再更新
   category.save()

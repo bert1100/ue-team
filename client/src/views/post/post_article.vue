@@ -64,7 +64,7 @@
                 <Row>
                     <Col span="18">
                         <Select v-model="articleTagSelected" label-in-value multiple placeholder="请选择文章标签" :value="articleTagSelected">
-                            <Tag class="article-tag" v-for="item in articleTagSelected" :key="item" slot="input" closable :name="item" @on-close="deleteTag" :color="item | selectColor(articleTagList)">{{item | selectName(articleTagList)}}</Tag>
+                            <Tag class="article-tag" v-for="item in articleTagSelected" :key="item" slot="input" closable :name="item" @on-close="deleteTag"  :color=" item | selectColor(articleTagList)" >{{item | selectName(articleTagList)}}</Tag>
                             <Option v-for="item in articleTagList" :value="item._id" :key="item._id" :label="item.name"><Icon type="record" :style="'margin-right:5px;color:'+ item.color"></Icon>{{item.name}}</Option>
                         </Select>
                     </Col>
@@ -75,7 +75,7 @@
                 <div v-show="addingNewTag" class="add-new-tag-con">
                     <Row>
                         <Col span="12">
-                            <Input v-model="newTagName" placeholder="请输入标签名" />                                
+                            <Input v-model="newTagName" placeholder="请输入标签名" />
                         </Col>
                         <Col span="6" class="padding-left-10">
                             <Button @click="createNewTag" long type="primary">确定</Button>
@@ -148,7 +148,7 @@
             },
             authorList() { // 作者列表
                 return this.$store.state.user.userlist;
-            }, 
+            },
             categories() {
                 return this.$store.state.categories.categorieslist;
             }
@@ -200,10 +200,10 @@
                 this.img_file[filename] = imgfile;
             },
             imgDel (filename) { //删除图片回调
-               delete this.img_file[filename]; 
+               delete this.img_file[filename];
             },
             sendArticle (data) { //发布文章到数据库 putResources
-                if(this.isEdit) { 
+                if(this.isEdit) {
                     putResources(this.$route.params.id,data).then((res) => {
                         this.$router.push('/docs/detials/'+ this.$route.params.id);
                     });
@@ -212,7 +212,7 @@
                         this.$router.push('/docs/detials/'+ res.data.resource._id);
                     });
                 }
-                
+
             },
             uploadImg() {
                 let formdata = new FormData();
@@ -251,7 +251,7 @@
                         this.$Message.error('Error');
                     }
                 })
-                
+
             }
         },
         created() {
@@ -306,19 +306,19 @@
         text-align: center;
     }
     .margin-bottom-10 {
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
     }
     .margin-top-10 {
-        margin-top: 10px; 
+        margin-top: 10px;
     }
     .margin-top-20 {
         margin-top: 20px;
     }
     .padding-left-10 {
-        padding-left: 10px; 
+        padding-left: 10px;
     }
     .padding-top-10 {
-        padding-top: 10px; 
+        padding-top: 10px;
     }
     .add-new-tag-con{
     margin-top: 20px;
@@ -378,7 +378,7 @@
         border-radius: 0!important;
         margin-bottom: 10px;
         text-align: center;
-        margin-right: 10px; 
+        margin-right: 10px;
         &:hover {
             color: #fff;
         }
