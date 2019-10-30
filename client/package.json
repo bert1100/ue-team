@@ -53,7 +53,7 @@
     "mockjs": "^1.0.1-beta3",
     "mongodb": "^3.0.0-rc0",
     "mongodb-core": "^3.0.0-rc0",
-    "mongoose": "^4.13.6",
+    "mongoose": "^5.7.7",
     "sockjs-client": "^1.1.4",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.9",
